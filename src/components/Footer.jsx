@@ -10,22 +10,22 @@ const Footer = () => {
     <section className='bg-dark-hard'>
       <footer className='container mx-auto grid grid-cols-10 px-5 py-10 gap-y-10 gap-x-5 md:pt-20 md:grid-cols-12 lg:grid-cols-10 lg:gap-x-10'>
         <div className='col-span-5 md:col-span-4 lg:col-span-2'>
-          <h3 className='text-dark-light font-bold md:text-lg'>Prodotti</h3>
+          <h3 className='text-dark-light font-bold md:text-lg'>Contenuti</h3>
           <ul className='text-[#959EAD] text-sm mt-5 space-y-4 md:text-base'>
             <li>
-              <a href="/">Pagina di destinazione</a>
+              <a href="/">Squadre</a>
             </li>
             <li>
-              <a href="/">Articoli</a>
+              <a href="/">Partite</a>
             </li>
             <li>
-              <a href="/">Database</a>
+              <a href="/">Statistiche</a>
             </li>
             <li>
-              <a href="/">Documentazione</a>
+              <a href="/">Giocatori</a>
             </li>
             <li>
-              <a href="/">Store</a>
+              <a href="/">Record</a>
             </li>
           </ul>
         </div>
