@@ -5,6 +5,7 @@ import BreadCrumbs from '../../components/BreadCrumbs'
 import { images } from '../../constants'
 import SuggestedPosts from './container/SuggestedPosts'
 import CommentsContainer from '../../components/comments/CommentsContainer'
+import SocialShareButtons from '../../components/SocialShareButtons'
 const breadCrumbsData = [
   {name: "Home", link: '/'},
   {name: "Blog", link: '/blog'},
@@ -66,7 +67,13 @@ const ArticleDetailPage = () => {
            </div>
            <CommentsContainer className='mt-10' logginedUserId="a"/>
            </article>
+           <div>
            <SuggestedPosts header="Ultimi articoli" posts={postsData} tags={tagsData} className='mt-8 lg:mt-0 lg:max-w-xs'/>
+           <div className='mt-7'>
+              <h2 className='font-roboto font-medium text-colortext mb-4 md:text-xl'>Condividi: </h2>
+              <SocialShareButtons url={encodeURI("https://www.transfermarkt.it/")} title={encodeURIComponent("Transfermarkt")}/>
+           </div>
+           </div>
         </section>
     </MainLayout>
   )
