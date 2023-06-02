@@ -4,6 +4,7 @@ import MainLayout from '../../components/MainLayout'
 import BreadCrumbs from '../../components/BreadCrumbs'
 import { images } from '../../constants'
 import SuggestedPosts from './container/SuggestedPosts'
+import CommentsContainer from '../../components/comments/CommentsContainer'
 const breadCrumbsData = [
   {name: "Home", link: '/'},
   {name: "Blog", link: '/blog'},
@@ -63,6 +64,7 @@ const ArticleDetailPage = () => {
            <div className='mt-4 text-dark-soft '>
             <p className='leading-7'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, totam. Possimus explicabo repellendus, architecto quidem magni vel ea soluta perspiciatis error dolorum! Corrupti iste illum laborum voluptas quis deleniti hic mollitia voluptatibus. Autem quibusdam, tempora doloremque iusto consequuntur dolorem fugiat veritatis minima labore numquam placeat facilis nemo natus repudiandae ab!</p>
            </div>
+           <CommentsContainer className='mt-10' logginedUserId="a"/>
            </article>
            <SuggestedPosts header="Ultimi articoli" posts={postsData} tags={tagsData} className='mt-8 lg:mt-0 lg:max-w-xs'/>
         </section>
