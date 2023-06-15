@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {AiOutlineMenu, AiOutlineClose} from 'react-icons/ai';
 import {MdKeyboardArrowDown} from 'react-icons/md';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { images } from '../constants';
 import { logout } from '../store/actions/user';
 const NavItemsInfo = [
@@ -50,11 +51,12 @@ const NavItem = ({item}) =>{
 }
 
 const Header = () => {
-const dispatch = useDispatch();
-const [navIsVisible, setNavIsVisible] = useState(false);
-const userState = useSelector(state => state.user);
-const [profileDropdown, setprofileDropdown] = useState(false);
-const  navVisibilityHandler = () => {
+        const navigate = useNavigate();
+        const dispatch = useDispatch();
+        const [navIsVisible, setNavIsVisible] = useState(false);
+        const userState = useSelector(state => state.user);
+        const [profileDropdown, setprofileDropdown] = useState(false);
+        const  navVisibilityHandler = () => {
     setNavIsVisible((curState) => {
         return !curState;
     });
@@ -97,7 +99,7 @@ const logoutHandler = () =>{
                     </div>
                 </div>
                 ) : (
-                    <button className='mt-5 lg:mt-0 border-2 border-[#2E8B57] px-6 py-2 rounded-full text-[#2E8B57] font-semibold hover:bg-[#2E8B57] hover:text-white transition-all duration-300'>Login</button>
+                    <button onClick={() => navigate('/login')} className='mt-5 lg:mt-0 border-2 border-[#2E8B57] px-6 py-2 rounded-full text-[#2E8B57] font-semibold hover:bg-[#2E8B57] hover:text-white transition-all duration-300'>Login</button>
                 )}
             
         </div>
