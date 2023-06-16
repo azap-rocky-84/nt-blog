@@ -21,7 +21,7 @@ const ProfilePage = () => {
     queryKey: ['profile']
   });
 
-  const {mutate, isLoading} =  useMutation({
+  const {mutate, isLoading: updateProfileIsLoading} =  useMutation({
     mutationFn: ({name, email, password}) =>{
       return updateProfile({
         token: userState.userInfo.token,
@@ -64,7 +64,6 @@ const ProfilePage = () => {
     <MainLayout>
       <section className='container mx-auto px-5 py-10'>
           <div className='w-full max-w-sm mx-auto'>
-            <p>{profileData?.name}</p>
             <ProfilePictures avatar={profileData?.avatar}/>
               <form onSubmit={handleSubmit(submitHandler)}>
                 <div className='flex flex-col mb-6 w-full'>
@@ -107,7 +106,7 @@ const ProfilePage = () => {
                       <p className='text-red-500 text-xs mt-1'>{errors.password?.message}</p>
                     )}
                 </div>
-                <button type='submit' disabled={!isValid || profileIsLoading} className='bg-primary text-white font-bold text-lg py-4 px-8 w-full rounded-lg mb-6 disabled:opacity-70 disabled:cursor-not-allowed'>Registrati</button>
+                <button type='submit' disabled={!isValid || profileIsLoading || updateProfileIsLoading} className='bg-primary text-white font-bold text-lg py-4 px-8 w-full rounded-lg mb-6 disabled:opacity-70 disabled:cursor-not-allowed'>Modifica</button>
               </form>
           </div>
       </section>
