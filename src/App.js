@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route index path='/' element={<HomePage/>}/>
-          <Route path='/blog/:id' element={<ArticleDetailPage/>}/>
+          <Route path='/blog/:slug' element={<ArticleDetailPage/>}/>
           <Route path='/register' element={<RegisterPage/>}/>
           <Route path='/login' element={<LoginPage/>}></Route>
           <Route path='/profile' element={<ProfilePage/>}></Route>
