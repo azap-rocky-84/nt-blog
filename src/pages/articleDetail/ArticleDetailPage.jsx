@@ -15,6 +15,8 @@ import CommentsContainer from '../../components/comments/CommentsContainer'
 import SocialShareButtons from '../../components/SocialShareButtons'
 import { useQuery } from '@tanstack/react-query'
 import { getSinglePost } from '../../services/index/posts'
+import ArticleDetailSkeleton from './components/ArticleDetailSkeleton';
+import ErrorMessage from '../../components/ErrorMessage';
 
 const postsData = [
   {
@@ -60,7 +62,7 @@ const ArticleDetailPage = () => {
   const {slug} = useParams();
   const [breadCrumbsData, setBreadCrumbsData] = useState([]);
   const [body, setBody] = useState(null);
-  const {data} = useQuery({
+  const {data, isLoading, isError} = useQuery({
     queryFn: () => getSinglePost({slug}),
     queryKey: ['blog', slug],
     onSuccess: (data) => {
@@ -74,6 +76,9 @@ const ArticleDetailPage = () => {
   });
    return (
     <MainLayout>
+      {isLoading ? (
+        <ArticleDetailSkeleton/>
+      ) : isError ? <ErrorMessage message="Impossibile caricare i dettagli del posto"/> : (
         <section className='container mx-auto max-w-5xl flex flex-col px-5 py-5 lg:flex-row lg:gap-x-5 lg:items-start'>
            <article className='flex-1'>
             <BreadCrumbs data={breadCrumbsData}/>
@@ -97,6 +102,7 @@ const ArticleDetailPage = () => {
            </div>
            </div>
         </section>
+      )};
     </MainLayout>
   )
 }
