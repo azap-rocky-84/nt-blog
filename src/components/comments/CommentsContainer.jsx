@@ -1,68 +1,41 @@
-import React, {useEffect, useState} from 'react'
-import { getCommentsData } from '../../data/comments';
+import React, {useState} from 'react'
 import CommentsForm from './CommentForm'
 import Comment from './Comment';
+import { useMutation } from '@tanstack/react-query';
+import { createNewComment } from '../../services/index/comments';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 
-const CommentsContainer = ({className, logginedUserId}) => {
-    const [comments, setComments] = useState([]);
-    const mainComments = comments.filter((comment)=>comment.parent === null);
+const CommentsContainer = ({className, logginedUserId, comments, postSlug}) => {
+    const userState = useSelector((state) => state.user);
     const [affectedComment, setAffectedComment] = useState(null);
-    console.log(comments);
-    useEffect(() => {
-        (async() => {
-            const commentData = await getCommentsData();
-            setComments(commentData);
-        })()
-    }, []);
+    const {mutate: mutateNewComment, isLoading: isLoadingNewComment} = useMutation({
+      mutationFn: ({token, desc, slug, parent, replyOnUser}) => {
+        return createNewComment({token, desc, slug, parent, replyOnUser});
+      },
+      onSuccess: () => {
+        toast.success("Commento inviato correttamente. Attendere l'approvazione!");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+        console.log(error);
+      },
+    });
     const addCommentHandler = (value, parent = null, replyOnUser = null) => {
-        const newComment = {
-                _id: Math.random().toString(),
-                user: {
-                  _id: "a",
-                  name: "Antonio Giorgio",
-                },
-                desc: value,
-                post: "1",
-                parent: parent,
-                replyOnUser: replyOnUser,
-                createdAt: new Date().toISOString(),
-              };
-              setComments((curState) => {
-                return [newComment, ...curState]
-              });
+              mutateNewComment({desc: value, parent, replyOnUser, token: userState.userInfo.token, slug:postSlug});
               setAffectedComment(null);
         };
         const updateCommentHandler = (value, commentId) => {
-          const updateComments = comments.map((comment) => {
-            if(comment._id===commentId){
-              return {...comment, desc:value};
-            }
-            return comment;
-          });
-          setComments(updateComments);
           setAffectedComment(null);
         };
         const deleteCommentHandler = (commentId) =>{
-          const updatedComments = comments.filter((comment) => {
-            return comment._id !== commentId
-          })
-          setComments(updatedComments);
-        };
-        const getRepliesHandler = (commentId) => {
-          return comments
-          .filter((comment) => comment.parent===commentId)
-          .sort((a, b) => {
-            return ( 
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-              );
-          });
         };
   return (
     <div className={`${className}`}>
-      <CommentsForm btnLabel='Invia' formSubmitHandler={(value) => addCommentHandler(value)}/>
+      <CommentsForm btnLabel='Invia' formSubmitHandler={(value) => addCommentHandler(value)} loading={isLoadingNewComment}/>
       <div className='space-y-4 mt-8'>
-        {mainComments.map((comment)=>(
-          <Comment key={comment._id} comment={comment} logginedUserId={logginedUserId} affectedComment={affectedComment} setAffectedComment={setAffectedComment} addComment={addCommentHandler} updateComment={updateCommentHandler} deleteComment={deleteCommentHandler} replies={getRepliesHandler(comment._id)} />
+        {comments.map((comment)=>(
+          <Comment key={comment._id} comment={comment} logginedUserId={logginedUserId} affectedComment={affectedComment} setAffectedComment={setAffectedComment} addComment={addCommentHandler} updateComment={updateCommentHandler} deleteComment={deleteCommentHandler} replies={comment.replies} />
         ))}
       </div>
     </div>

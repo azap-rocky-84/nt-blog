@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const CommentsForm = ({btnLabel, formSubmitHandler, formCancelHandler = null, initialText=''}) => {
+const CommentsForm = ({btnLabel, formSubmitHandler, formCancelHandler = null, initialText='', loading=false}) => {
     const [value, setvalue] = useState(initialText);
     const submitHandler = (e) => {
         e.preventDefault();
@@ -17,7 +17,7 @@ const CommentsForm = ({btnLabel, formSubmitHandler, formCancelHandler = null, in
               Cancella
             </button>
           )}
-          <button type='submit' className='px-6 py-2.5 rounded-lg bg-primary text-white font-semibold'>{btnLabel}</button>
+          <button disabled={loading} type='submit' className='px-6 py-2.5 rounded-lg bg-primary text-white font-semibold disabled:opacity-70 disabled:cursor-not-allowed'>{btnLabel}</button>
         </div>
       </div>
     </form>

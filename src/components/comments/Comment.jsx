@@ -1,5 +1,5 @@
 import React from 'react'
-import {images} from '../../constants'
+import {images, stables} from '../../constants'
 import {FiMessageSquare, FiEdit2, FiTrash} from 'react-icons/fi'
 import CommentForm from './CommentForm';
 
@@ -12,7 +12,7 @@ const Comment = ({comment, logginedUserId, affectedComment, setAffectedComment, 
     const replyOnUserId = comment.user._id;
   return (
     <div className='flex flex-nowrap items-start gap-x-3 bg-[#F2F4F5] p-3 rounded-lg'>
-        <img src={images.PostProfileImage} alt="" className='w-9 h-9 object-cover rounded-full' />
+        <img src={comment?.user?.avatar ? stables.UPLOAD_FOLDER_BASE_URL + comment.user.avatar : images.noUserImagePost} alt="" className='w-9 h-9 object-cover rounded-full' />
         <div className='flex-1 flex flex-col'>
             <h5 className='font-bold text-dark-hard text-xs lg:text-sm'>{comment.user.name}</h5>
             <span className='text-xs text-dark-light'>{new Date(comment.createdAt).toLocaleDateString("en-US", {
