@@ -14,51 +14,11 @@ import SuggestedPosts from './container/SuggestedPosts'
 import CommentsContainer from '../../components/comments/CommentsContainer'
 import SocialShareButtons from '../../components/SocialShareButtons'
 import { useQuery } from '@tanstack/react-query'
-import { getSinglePost } from '../../services/index/posts'
+import { getAllPosts, getSinglePost } from '../../services/index/posts'
 import ArticleDetailSkeleton from './components/ArticleDetailSkeleton';
 import ErrorMessage from '../../components/ErrorMessage';
 import { useSelector } from 'react-redux';
 
-const postsData = [
-  {
-    _id: "1",
-    image: images.Post1Image,
-    title: "La Danimarca del 1992",
-    createdAt: "2023-01-28T15:35:53.607+0000"
-  },
-  {
-    _id: "2",
-    image: images.Post1Image,
-    title: "United2026 sarà il mondiale più bello di sempre?",
-    createdAt: "2023-01-28T15:35:53.607+0000"
-  },
-  {
-    _id: "3",
-    image: images.Post1Image,
-    title: "Un viaggio nella cultura calcistica del Messico",
-    createdAt: "2023-01-28T15:35:53.607+0000"
-  },
-  {
-    _id: "4",
-    image: images.Post1Image,
-    title: "I Paesi Bassi del 1988",
-    createdAt: "2023-01-28T15:35:53.607+0000"
-  }
-];
-const tagsData = [
-  "United2026",
-  "CONMEBOL",
-  "Argentina",
-  "Brasile",
-  "Colombia",
-  "Uruguay",
-  "Paraguay",
-  "Cile",
-  "Venezuela",
-  "Bolivia",
-  "Ecuador",
-  "Perù"
-];
 const ArticleDetailPage = () => {
   const {slug} = useParams();
   const userState = useSelector((state => state.user));
@@ -75,6 +35,10 @@ const ArticleDetailPage = () => {
       ]);
       setBody(parse(generateHTML(data?.body, [Bold, Italic, Text, Paragraph, Document])));
     },
+  });
+  const {data:postsData} = useQuery({
+    queryFn: () => getAllPosts(),
+    queryKey: ["posts"],
   });
    return (
     <MainLayout>
@@ -97,14 +61,14 @@ const ArticleDetailPage = () => {
            <CommentsContainer comments={data?.comments} className='mt-10' logginedUserId={userState?.userInfo?._id} postSlug={slug}/>
            </article>
            <div>
-           <SuggestedPosts header="Ultimi articoli" posts={postsData} tags={tagsData} className='mt-8 lg:mt-0 lg:max-w-xs'/>
+           <SuggestedPosts header="Ultimi articoli" posts={postsData} tags={data?.tags} className='mt-8 lg:mt-0 lg:max-w-xs'/>
            <div className='mt-7'>
               <h2 className='font-roboto font-medium text-colortext mb-4 md:text-xl'>Condividi: </h2>
-              <SocialShareButtons url={encodeURI("https://www.transfermarkt.it/")} title={encodeURIComponent("Transfermarkt")}/>
+              <SocialShareButtons url={encodeURI(window.location.href)} title={encodeURIComponent(data?.title)}/>
            </div>
            </div>
         </section>
-      )};
+      )}; 
     </MainLayout>
   )
 }
