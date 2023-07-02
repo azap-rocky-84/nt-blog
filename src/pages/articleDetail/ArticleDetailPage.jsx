@@ -61,7 +61,7 @@ const ArticleDetailPage = () => {
            <CommentsContainer comments={data?.comments} className='mt-10' logginedUserId={userState?.userInfo?._id} postSlug={slug}/>
            </article>
            <div>
-           <SuggestedPosts header="Ultimi articoli" posts={postsData} tags={data?.tags} className='mt-8 lg:mt-0 lg:max-w-xs'/>
+           <SuggestedPosts header="Ultimi articoli" posts={postsData?.data} tags={data?.tags} className='mt-8 lg:mt-0 lg:max-w-xs'/>
            <div className='mt-7'>
               <h2 className='font-roboto font-medium text-colortext mb-4 md:text-xl'>Condividi: </h2>
               <SocialShareButtons url={encodeURI(window.location.href)} title={encodeURIComponent(data?.title)}/>
