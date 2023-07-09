@@ -11,6 +11,7 @@ import Admin from './pages/admin/screens/Admin';
 import Comment from './pages/admin/screens/comments/Comment';
 import NewPost from './pages/admin/screens/posts/NewPost';
 import ManagePost from './pages/admin/screens/posts/ManagePost';
+import TeamsDatabase from './pages/database/TeamsDatabase';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/register' element={<RegisterPage/>}/>
           <Route path='/login' element={<LoginPage/>}></Route>
           <Route path='/profile' element={<ProfilePage/>}></Route>
+          <Route path='/database' element={<TeamsDatabase/>}></Route>
           <Route path='/admin' element={<AdminLayout/>}>
             <Route index element={<Admin/>}/>
             <Route path="comments" element={<Comment/>}/>

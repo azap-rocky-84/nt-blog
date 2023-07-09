@@ -5,11 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { images } from '../constants';
 import { logout } from '../store/actions/user';
+
 const NavItemsInfo = [
     {name: "Home", type:"link", href:"/"},
     {name: "Articoli", type:"link", href:"/articles"},
     {name: "Pagine", type:"dropdown", items: [{title: "Chi siamo?", href:"/about"}, {title: "Contattaci?", href:"/contact"}]},
-    {name: "Scopri di più", type:"link", href:"/more"},
+    {name: "Database", type:"link", href:"/database"},
     {name: "FAQ", type:"link", href:"/faq"},
 ]
 const NavItem = ({item}) =>{
