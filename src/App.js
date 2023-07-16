@@ -12,6 +12,7 @@ import Comment from './pages/admin/screens/comments/Comment';
 import NewPost from './pages/admin/screens/posts/NewPost';
 import ManagePost from './pages/admin/screens/posts/ManagePost';
 import TeamsDatabase from './pages/database/TeamsDatabase';
+import EditPost from './pages/admin/screens/posts/EditPost';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="comments" element={<Comment/>}/>
             <Route path="posts/new" element={<NewPost/>}/>
             <Route path="posts/manage" element={<ManagePost/>}/>
+            <Route path="posts/manage/edit/:slug" element={<EditPost/>}/>
           </Route>
         </Routes>
       </Router>

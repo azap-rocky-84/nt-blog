@@ -1,17 +1,38 @@
 import React, { useState } from 'react'
-import { getAllPosts } from '../../../../services/index/posts';
-import { useQuery } from '@tanstack/react-query';
+import { deletePost, getAllPosts } from '../../../../services/index/posts';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { images, stables } from '../../../../constants';
 import Pagination from '../../../../components/Pagination';
 import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 let isFirstRun = true;
 
 const ManagePost = () => {
+  const queryClient = useQueryClient();
+  const userState = useSelector((state) => state.user);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const {data:postsData, isLoading, isFetching, refetch} = useQuery({
     queryFn: () => getAllPosts(searchKeyword, currentPage),
     queryKey: ["posts"],
+  });
+  const { mutate: mutateDeletePost, isLoading: isLoadingDeletePost } = useMutation({
+    mutationFn: ({ slug, token }) => {
+      return deletePost({
+        slug,
+        token,
+      });
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["posts"]);
+      toast.success("Post eliminato correttamente");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+      console.log(error);
+    },
   });
   useEffect(() => {
     if(isFirstRun){
@@ -29,6 +50,9 @@ const ManagePost = () => {
     setCurrentPage(1);
     refetch();
   };
+  const deletePostHandler = ({slug, token}) => {
+    mutateDeletePost({slug, token});
+  }
   return (
     <div>
       <h1 className='text-2xl font-semibold'>Gestisci post</h1>
@@ -77,6 +101,12 @@ const ManagePost = () => {
                                  Carico...
                               </td>
                             </tr>
+                          ) : postsData?.data?.length === 0 ? (
+                            <tr>
+                              <td colSpan={5} className='text-center py-10 w-full'>
+                                 Nessun post trovato nel database
+                              </td>
+                            </tr>
                           ) : (
                             postsData?.data.map((post) => (
                               <tr>
@@ -111,14 +141,15 @@ const ManagePost = () => {
                                 <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
                                    <div className='flex gap-x-2 flex-wrap'>
                                         {post.tags.length>0 ? post.tags.map((tag, index) => (
-                                          <p>{tag}{post.tags.length-1 !== index && ','}</p>
+                                          <p key={index}>{tag}{post.tags.length-1 !== index && ','}</p>
                                         )) : "Tags non inseriti"}
                                    </div>
                                 </td>
-                                <td className="px-5 py-5 text-sm bg-white border-b border-gray-200">
-                                    <a href="/" className="text-indigo-600 hover:text-indigo-900">
-                                        Edit
-                                    </a>
+                                <td className="px-5 py-5 text-sm bg-white border-b border-gray-200 space-x-5">
+                                     <button disabled={isLoadingDeletePost} type="button" className='text-red-600 hover:text-red-900 disabled:opacity-70 disabled:cursor-not-allowed' onClick={() => {deletePostHandler({slug:post?.slug, token: userState.userInfo.token})}}>Cancella</button>
+                                    <Link to={`/admin/posts/manage/edit/${post?.slug}`} className="text-green-600 hover:text-green-900">
+                                        Modifica
+                                    </Link>
                                 </td>
                             </tr>
                             ))
