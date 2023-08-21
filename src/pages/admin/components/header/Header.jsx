@@ -5,6 +5,7 @@ import { images } from '../../../../constants'
 import { AiFillDashboard, AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { FaComments } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
+import {GiWorld} from 'react-icons/gi'
 import NavItem from './NavItem';
 import NavItemCollapse from './NavItemCollapse';
 
@@ -22,6 +23,13 @@ const MENU_ITEMS = [
         icon: <FaComments className='text-xl'/>,
         name: "comments",
         type: "link",
+    },
+    {
+        title: "Database",
+        content: [{title: "Aggiungi", link: "/admin/nt/add"}, {title: "Gestisci", link:"/admin/nt/managent"}],
+        icon: <GiWorld className='text-xl'/>,
+        name: "nt",
+        type: "collapse",
     },
     {
         title: "Post",

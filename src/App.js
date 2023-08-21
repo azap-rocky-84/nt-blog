@@ -13,6 +13,9 @@ import NewPost from './pages/admin/screens/posts/NewPost';
 import ManagePost from './pages/admin/screens/posts/ManagePost';
 import TeamsDatabase from './pages/database/TeamsDatabase';
 import EditPost from './pages/admin/screens/posts/EditPost';
+import AddNt from './pages/admin/screens/nt/AddNt';
+import ManageNt from './pages/admin/screens/nt/ManageNt';
+import EditNt from './pages/admin/screens/nt/EditNt';
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
             <Route path="posts/new" element={<NewPost/>}/>
             <Route path="posts/manage" element={<ManagePost/>}/>
             <Route path="posts/manage/edit/:slug" element={<EditPost/>}/>
+            <Route path="nt/add" element={<AddNt/>}/>
+            <Route path="nt/managent" element={<ManageNt/>}/>
+            <Route path="nt/managent/editnt/:fifaCode" element={<EditNt/>}/>
           </Route>
         </Routes>
       </Router>
