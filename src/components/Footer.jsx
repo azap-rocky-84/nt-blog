@@ -1,129 +1,141 @@
-import React from 'react'
-import {AiOutlineTwitter, AiFillYoutube, AiFillInstagram} from 'react-icons/ai'
-import {FaFacebook} from 'react-icons/fa'
-import {BsTelegram} from 'react-icons/bs'
-import {IoIosFootball} from 'react-icons/io'
-import { images } from '../constants'
+import React from "react";
+import {
+  AiOutlineTwitter,
+  AiFillYoutube,
+  AiFillInstagram,
+} from "react-icons/ai";
+import { FaFacebook } from "react-icons/fa";
+import { BsDiscord, BsTelegram } from "react-icons/bs";
+import { images } from "../constants";
 
 const Footer = () => {
   return (
-    <section className='bg-dark-hard'>
-      <footer className='container mx-auto grid grid-cols-10 px-5 py-10 gap-y-10 gap-x-5 md:pt-20 md:grid-cols-12 lg:grid-cols-10 lg:gap-x-10'>
-        <div className='col-span-5 md:col-span-4 lg:col-span-2'>
-          <h3 className='text-dark-light font-bold md:text-lg'>Contenuti</h3>
-          <ul className='text-[#959EAD] text-sm mt-5 space-y-4 md:text-base'>
-            <li>
-              <a href="/">Squadre</a>
-            </li>
-            <li>
-              <a href="/">Partite</a>
-            </li>
-            <li>
-              <a href="/">Statistiche</a>
-            </li>
-            <li>
-              <a href="/">Giocatori</a>
-            </li>
-            <li>
-              <a href="/">Record</a>
-            </li>
-          </ul>
-        </div>
-        <div className='col-span-5 md:col-span-4 lg:col-span-2'>
-          <h3 className='text-dark-light font-bold md:text-lg'>Servizi</h3>
-          <ul className='text-[#959EAD] text-sm mt-5 space-y-4'>
-            <li>
-              <a href="/">Sviluppatori</a>
-            </li>
-            <li>
-              <a href="/">Blogging</a>
-            </li>
-            <li>
-              <a href="/">Writing</a>
-            </li>
-            <li>
-              <a href="/">Graphic Design</a>
-            </li>
-            <li>
-              <a href="/">Aggiornamenti database</a>
-            </li>
-          </ul>
-        </div>
-        <div className='col-span-5 md:col-span-4 md:col-start-5 lg:col-span-2 lg:col-start-auto'>
-          <h3 className='text-dark-light font-bold md:text-lg'>Company</h3>
-          <ul className='text-[#959EAD] text-sm mt-5 space-y-4'>
-            <li>
-              <a href="/">Chi siamo?</a>
-            </li>
-            <li>
-              <a href="/">Termini e condizioni</a>
-            </li>
-            <li>
-              <a href="/">Privacy</a>
-            </li>
-            <li>
-              <a href="/">Informazioni di sviluppo</a>
-            </li>
-            <li>
-              <a href="/">Strumenti</a>
-            </li>
-          </ul>
-        </div>
-        <div className='col-span-5 md:col-span-4 lg:col-span-2'>
-          <h3 className='text-dark-light font-bold md:text-lg'>Di più</h3>
-          <ul className='text-[#959EAD] text-sm mt-5 space-y-4'>
-            <li>
-              <a href="/">Segnala un problema</a>
-            </li>
-            <li>
-              <a href="/">Licenza</a>
-            </li>
-            <li>
-              <a href="/">Gestione account</a>
-            </li>
-          </ul>
-        </div>
-        <div className='col-span-10 md:order-first md:col-span-4 lg:col-span-2'>
-          <img src={images.Logo} alt="logo" className='mx-auto md:mx-0' />
-          <p className='text-sm text-dark-light text-center mt-4 md:text-left md:text-base lg:text-sm'>Il portale delle nazionali di calcio</p>
-          <ul className='flex justify-center items-center mt-5 space-x-4 text-gray-300 md:justify-start'>
-            <li>
-              <a href="/">
-                <AiOutlineTwitter className='w-6 h-auto' />
-              </a>
-            </li>
-            <li>
-              <a href="/">
-                <AiFillYoutube className='w-6 h-auto' />
-              </a>
-            </li>
-            <li>
-              <a href="/">
-                <AiFillInstagram className='w-6 h-auto' />
-              </a>
-            </li>
-            <li>
-              <a href="/">
-                <FaFacebook className='w-6 h-auto' />
-              </a>
-            </li>
-            <li>
-              <a href="/">
-                <BsTelegram className='w-6 h-auto' />
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className='hidden md:flex flex-col items-center space-y-4 md:col-span-12 lg:col-span-10'>
-          <div className='bg-primary text-white p-3 rounded-full'>
-            <IoIosFootball className='w-7 h-auto' />
+    <footer className="bg-white dark:bg-gray-900">
+      <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+        <div className="md:flex md:justify-between">
+          <div className="mb-6 md:mb-0">
+            <a href="/" className="flex items-center">
+              <img src={images.GreenLogo} alt="logo" className="mr-3 h-8" />
+              <span className="self-center whitespace-nowrap text-2xl font-semibold text-primary dark:text-white">
+                Il portale delle nazionali di calcio
+              </span>
+            </a>
           </div>
-          <p className='font-bold italic text-dark-light '>Copyright © 2023 - Tutti i diritti riservati</p>
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
+            <div>
+              <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+                Risorse
+              </h2>
+              <ul className="font-medium text-gray-500 dark:text-gray-400">
+                <li className="mb-4">
+                  <a href="/allPostList" className="hover:underline">
+                    Post
+                  </a>
+                </li>
+                <li className="mb-4">
+                  <a href="/database" className="hover:underline">
+                    Nazionali
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+                Seguici
+              </h2>
+              <ul className="font-medium text-gray-500 dark:text-gray-400">
+                <li className="mb-4">
+                  <a href="/" className="hover:underline">
+                    Github
+                  </a>
+                </li>
+                <li className="mb-4">
+                  <a href="/" className="hover:underline">
+                    Discord
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+                Legali
+              </h2>
+              <ul className="font-medium text-gray-500 dark:text-gray-400">
+                <li className="mb-4">
+                  <a href="/" className="hover:underline">
+                    Privacy
+                  </a>
+                </li>
+                <li className="mb-4">
+                  <a href="/" className="hover:underline">
+                    Termini e Condizioni
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </footer>
+        <hr className="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
+        <div className="sm:flex sm:items-center sm:justify-between">
+          <span className="text-sm text-gray-500 dark:text-gray-400 sm:text-center">
+            © 2023{" "}
+            <a href="/" className="hover:underline">
+              GeoGoal ™
+            </a>{" "}
+            Tutti i diritti riservati.
+          </span>
+          <div className="mt-4 flex space-x-5 sm:mt-0 sm:justify-center">
+            <a
+              href="/"
+              className="text-gray-500 hover:text-[#4267B2] dark:hover:text-white"
+            >
+              <FaFacebook className="h-6 w-6" />
+            </a>
+          </div>
+          <div className="mt-4 flex space-x-5 sm:mt-0 sm:justify-center">
+            <a
+              href="/"
+              className="text-gray-500 hover:text-[#E1306C] dark:hover:text-white"
+            >
+              <AiFillInstagram className="h-6 w-6" />
+            </a>
+          </div>
+          <div className="mt-4 flex space-x-5 sm:mt-0 sm:justify-center">
+            <a
+              href="/"
+              className="text-gray-500 hover:text-[#1DA1F2] dark:hover:text-white"
+            >
+              <AiOutlineTwitter className="h-6 w-6" />
+            </a>
+          </div>
+          <div className="mt-4 flex space-x-5 sm:mt-0 sm:justify-center">
+            <a
+              href="/"
+              className="text-gray-500 hover:text-[#FF0000] dark:hover:text-white"
+            >
+              <AiFillYoutube className="h-6 w-6" />
+            </a>
+          </div>
+          <div className="mt-4 flex space-x-5 sm:mt-0 sm:justify-center">
+            <a
+              href="/"
+              className="text-gray-500 hover:text-[#2AABEE] dark:hover:text-white"
+            >
+              <BsTelegram className="h-6 w-6" />
+            </a>
+          </div>
+          <div className="mt-4 flex space-x-5 sm:mt-0 sm:justify-center">
+            <a
+              href="/"
+              className="text-gray-500 hover:text-[#5865F2] dark:hover:text-white"
+            >
+              <BsDiscord className="h-6 w-6" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
-    </section>
-  )
-}
-
-export default Footer
+export default Footer;
