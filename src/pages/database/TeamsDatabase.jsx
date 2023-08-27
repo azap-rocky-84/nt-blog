@@ -15,6 +15,7 @@ const TeamsDatabase = () => {
     "ESH",
     "UMI",
     "WLF",
+    "GBR",
   ];
   const filteredMapData = mapData.features.filter(
     (country) => !excludedCountries.includes(country.properties.ISO_A3)
