@@ -10,11 +10,11 @@ const NavItemsInfo = [
   { name: "Home", type: "link", href: "/" },
   { name: "Articoli", type: "link", href: "/articles" },
   {
-    name: "Pagine",
+    name: "Team",
     type: "dropdown",
     items: [
       { title: "Chi siamo?", href: "/about" },
-      { title: "Contattaci?", href: "/contact" },
+      { title: "Entra nella squadra!", href: "/contact" },
     ],
   },
   { name: "Database", type: "link", href: "/database" },
@@ -88,7 +88,7 @@ const Header = () => {
     <section className="sticky left-0 right-0 top-0 z-50 bg-white">
       <header className="container mx-auto flex items-center justify-between px-5 py-4">
         <Link to="/">
-          <img className="w-16" src={images.GreenLogo} alt="logo" />
+          <img className="w-8 sm:w-16" src={images.GreenLogo} alt="logo" />
         </Link>
         <div className="z-50 lg:hidden">
           {navIsVisible ? (

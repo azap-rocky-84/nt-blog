@@ -10,13 +10,13 @@ import { images } from "../constants";
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900">
+    <footer className="bg-white dark:bg-gray-900 border-t-2 border-primary">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <a href="/" className="flex items-center">
               <img src={images.GreenLogo} alt="logo" className="mr-3 h-8" />
-              <span className="self-center whitespace-nowrap text-2xl font-semibold text-primary dark:text-white">
+              <span className="self-center whitespace-nowrap hidden lg:block text-xl font-semibold text-primary dark:text-white">
                 Il portale delle nazionali di calcio
               </span>
             </a>
@@ -41,17 +41,17 @@ const Footer = () => {
             </div>
             <div>
               <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
-                Seguici
+                Team GeoGoal
               </h2>
               <ul className="font-medium text-gray-500 dark:text-gray-400">
                 <li className="mb-4">
                   <a href="/" className="hover:underline">
-                    Github
+                    Chi siamo?
                   </a>
                 </li>
                 <li className="mb-4">
                   <a href="/" className="hover:underline">
-                    Discord
+                    Invia la tua candidatura
                   </a>
                 </li>
               </ul>
@@ -76,7 +76,7 @@ const Footer = () => {
           </div>
         </div>
         <hr className="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
-        <div className="sm:flex sm:items-center sm:justify-between">
+        <div className="sm:flex sm:items-center sm:justify-between sm:flex-wrap">
           <span className="text-sm text-gray-500 dark:text-gray-400 sm:text-center">
             © 2023{" "}
             <a href="/" className="hover:underline">
