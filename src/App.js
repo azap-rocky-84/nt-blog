@@ -10,11 +10,9 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Admin from "./pages/admin/screens/Admin";
 import Comment from "./pages/admin/screens/comments/Comment";
-import NewPost from "./pages/admin/screens/posts/NewPost";
 import ManagePost from "./pages/admin/screens/posts/ManagePost";
 import TeamsDatabase from "./pages/database/TeamsDatabase";
 import EditPost from "./pages/admin/screens/posts/EditPost";
-import AddNt from "./pages/admin/screens/nt/AddNt";
 import ManageNt from "./pages/admin/screens/nt/ManageNt";
 import EditNt from "./pages/admin/screens/nt/EditNt";
 
@@ -33,10 +31,8 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Admin />} />
             <Route path="comments" element={<Comment />} />
-            <Route path="posts/new" element={<NewPost />} />
             <Route path="posts/manage" element={<ManagePost />} />
             <Route path="posts/manage/edit/:slug" element={<EditPost />} />
-            <Route path="nt/add" element={<AddNt />} />
             <Route path="nt/managent" element={<ManageNt />} />
             <Route path="nt/managent/editnt/:fifaCode" element={<EditNt />} />
           </Route>

@@ -57,3 +57,20 @@ export const updateNt = async ({updatedData, fifaCode, token}) =>{
         throw new Error(error.message);
     }
 };
+
+export const createNt = async ({token}) =>{
+    try {
+        const config = {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
+        const {data} = await axios.post(`/api/nt`, {}, config);
+        return data;
+    } catch (error) {
+        if(error.response && error.response.data.message){
+            throw new Error(error.response.data.message);
+        }
+        throw new Error(error.message);
+    }
+};
