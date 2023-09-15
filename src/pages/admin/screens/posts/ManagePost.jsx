@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { MdDoNotDisturbAlt } from "react-icons/md";
+import { AiTwotoneDelete } from "react-icons/ai";
+import { BsFillPencilFill } from "react-icons/bs";
 let isFirstRun = true;
 
 const ManagePost = () => {
@@ -65,7 +68,6 @@ const ManagePost = () => {
       <div className="mx-auto w-full px-4">
         <div className="py-8">
           <div className="mb-1 flex w-full flex-row justify-between sm:mb-0">
-            <h2 className="text-2xl leading-tight">Users</h2>
             <div className="text-end">
               <form
                 onSubmit={submitSearchKeywordHandler}
@@ -75,17 +77,17 @@ const ManagePost = () => {
                   <input
                     type="text"
                     id='"form-subscribe-Filter'
-                    className=" w-full flex-1 appearance-none rounded-lg border border-gray-300 border-transparent bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600"
+                    className=" w-full flex-1 appearance-none rounded-lg border border-gray-300 border-transparent bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="Titolo del post..."
                     onChange={searchKeywordHandler}
                     value={searchKeyword}
                   />
                 </div>
                 <button
-                  className="flex-shrink-0 rounded-lg bg-purple-600 px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+                  className="flex-shrink-0 rounded-lg bg-primary px-4 py-2 text-base font-semibold text-white shadow-md hover:border-primary hover:bg-white hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-purple-200"
                   type="submit"
                 >
-                  Filter
+                  Filtra
                 </button>
               </form>
             </div>
@@ -116,12 +118,6 @@ const ManagePost = () => {
                     <th
                       scope="col"
                       className="border-b border-gray-200 bg-white px-5 py-3 text-left text-sm font-normal uppercase text-gray-800"
-                    >
-                      Tags
-                    </th>
-                    <th
-                      scope="col"
-                      className="border-b border-gray-200 bg-white px-5 py-3 text-left text-sm font-normal uppercase text-gray-800"
                     ></th>
                   </tr>
                 </thead>
@@ -141,7 +137,7 @@ const ManagePost = () => {
                   ) : (
                     postsData?.data.map((post) => (
                       <tr>
-                        <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                        <td className="w-6/12 border-b border-gray-200 bg-white px-5 py-5 text-sm">
                           <div className="flex items-center">
                             <div className="flex-shrink-0">
                               <a href="/" className="relative block">
@@ -164,14 +160,16 @@ const ManagePost = () => {
                             </div>
                           </div>
                         </td>
-                        <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                          <p className="whitespace-no-wrap text-gray-900">
-                            {post.categories.length > 0
-                              ? post.categories[0]
-                              : "Categoria non inserita"}
+                        <td className="items-center border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                          <p className="whitespace-no-wrap items-center text-gray-900">
+                            {post.categories.length > 0 ? (
+                              post.categories[0]
+                            ) : (
+                              <MdDoNotDisturbAlt />
+                            )}
                           </p>
                         </td>
-                        <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                        <td className="w-3/12 border-b border-gray-200 bg-white px-5 py-5 text-sm">
                           <p className="whitespace-no-wrap text-gray-900">
                             {new Date(post.createdAt).toLocaleDateString(
                               "en-US",
@@ -183,23 +181,11 @@ const ManagePost = () => {
                             )}
                           </p>
                         </td>
-                        <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                          <div className="flex flex-wrap gap-x-2">
-                            {post.tags.length > 0
-                              ? post.tags.map((tag, index) => (
-                                  <p key={index}>
-                                    {tag}
-                                    {post.tags.length - 1 !== index && ","}
-                                  </p>
-                                ))
-                              : "Tags non inseriti"}
-                          </div>
-                        </td>
                         <td className="space-x-5 border-b border-gray-200 bg-white px-5 py-5 text-sm">
                           <button
                             disabled={isLoadingDeletePost}
                             type="button"
-                            className="text-red-600 hover:text-red-900 disabled:cursor-not-allowed disabled:opacity-70"
+                            className="rounded-lg border-2 bg-red-600 px-2 py-2 hover:border-red-600 transition duration-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-70"
                             onClick={() => {
                               deletePostHandler({
                                 slug: post?.slug,
@@ -207,13 +193,15 @@ const ManagePost = () => {
                               });
                             }}
                           >
-                            Cancella
+                            <AiTwotoneDelete className="text-2xl text-white hover:text-red-600" />
                           </button>
-                          <Link
-                            to={`/admin/posts/manage/edit/${post?.slug}`}
-                            className="text-green-600 hover:text-green-900"
-                          >
-                            Modifica
+                          <Link to={`/admin/posts/manage/edit/${post?.slug}`}>
+                            <button
+                              type="button"
+                              className="rounded-lg border-2 bg-green-600 px-2 py-2 hover:border-green-600 transition duration-300 hover:bg-white"
+                            >
+                              <BsFillPencilFill className="text-2xl text-white hover:text-green-600" />
+                            </button>
                           </Link>
                         </td>
                       </tr>

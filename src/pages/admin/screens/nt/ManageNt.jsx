@@ -6,6 +6,8 @@ import { toast } from "react-hot-toast";
 import { images, stables } from "../../../../constants";
 import { Link } from "react-router-dom";
 import Pagination from "../../../../components/Pagination";
+import { AiTwotoneDelete } from "react-icons/ai";
+import { BsFillPencilFill } from "react-icons/bs";
 let isFirstRun = true;
 const UpdateNt = () => {
   const queryClient = useQueryClient();
@@ -21,7 +23,7 @@ const UpdateNt = () => {
     queryFn: () => getAllNt(searchKeyword, currentPage),
     queryKey: ["nt"],
   });
-  const { mutate: mutateDeletePost, isLoading: isLoadingDeletePost } =
+  const { mutate: mutateDeleteNt, isLoading: isLoadingDeleteNt } =
     useMutation({
       mutationFn: ({ fifaCode, token }) => {
         return deleteNt({
@@ -55,7 +57,7 @@ const UpdateNt = () => {
     refetch();
   };
   const deleteNtHandler = ({ fifaCode, token }) => {
-    mutateDeletePost({ fifaCode, token });
+    mutateDeleteNt({ fifaCode, token });
   };
   return (
     <div>
@@ -74,14 +76,14 @@ const UpdateNt = () => {
                   <input
                     type="text"
                     id='"form-subscribe-Filter'
-                    className=" w-full flex-1 appearance-none rounded-lg border border-gray-300 border-transparent bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600"
-                    placeholder="Titolo del post..."
+                    className=" w-full flex-1 appearance-none rounded-lg border border-gray-300 border-transparent bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Nazione ..."
                     onChange={searchKeywordHandler}
                     value={searchKeyword}
                   />
                 </div>
                 <button
-                  className="flex-shrink-0 rounded-lg bg-purple-600 px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+                  className="flex-shrink-0 rounded-lg bg-primary px-4 py-2 text-base font-semibold text-white shadow-md hover:bg-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-primary-200"
                   type="submit"
                 >
                   Filtra
@@ -143,7 +145,7 @@ const UpdateNt = () => {
                         <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                           <div className="flex items-center">
                             <div className="flex-shrink-0">
-                              <a href="/" className="relative block">
+                              <a href={`/detail/${nt?.fifaCode}`} className="relative block">
                                 <img
                                   alt="flag"
                                   src={
@@ -152,7 +154,7 @@ const UpdateNt = () => {
                                         nt?.flag
                                       : images.noImagePost
                                   }
-                                  className="mx-auto w-10 h-auto rounded-lg object-contain border-b border-black"
+                                  className="mx-auto w-10 h-auto rounded-lg object-contain border border-black"
                                 />
                               </a>
                             </div>
@@ -181,15 +183,15 @@ const UpdateNt = () => {
                           </p>
                         </td>
                         <td className="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                          <div className="flex flex-wrap gap-x-2">
+                          <div className="font-bold flex flex-wrap gap-x-2">
                             {nt.fifaCode}
                           </div>
                         </td>
                         <td className="space-x-5 border-b border-gray-200 bg-white px-5 py-5 text-sm">
                           <button
-                            disabled={isLoadingDeletePost}
+                            disabled={isLoadingDeleteNt}
                             type="button"
-                            className="text-red-600 hover:text-red-900 disabled:cursor-not-allowed disabled:opacity-70"
+                            className="rounded-lg border-2 bg-red-600 px-2 py-2 hover:border-red-600 transition duration-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-70"
                             onClick={() => {
                               deleteNtHandler({
                                 fifaCode: nt?.fifaCode,
@@ -197,13 +199,18 @@ const UpdateNt = () => {
                               });
                             }}
                           >
-                            Cancella
+                           <AiTwotoneDelete className="text-2xl text-white hover:text-red-600"/>
                           </button>
                           <Link
                             to={`/admin/nt/managent/editnt/${nt?.fifaCode}`}
                             className="text-green-600 hover:text-green-900"
                           >
-                            Modifica
+                          <button
+                              type="button"
+                              className="rounded-lg border-2 bg-green-600 px-2 py-2 hover:border-green-600 transition duration-300 hover:bg-white"
+                            >
+                              <BsFillPencilFill className="text-2xl text-white hover:text-green-600" />
+                            </button>
                           </Link>
                         </td>
                       </tr>
