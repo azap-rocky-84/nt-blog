@@ -21,7 +21,7 @@ const Hero = () => {
             Un viaggio entusiasmante nel calcio internazionale, tra news,
             approfondimenti e interviste
           </p>
-          <button className="mt-4 inline-flex items-center rounded-md bg-primary px-4 py-2 text-white transition duration-300 hover:bg-primary hover:bg-opacity-75">
+          <button className="mt-4 inline-flex items-center rounded-md bg-primary px-4 py-2 text-white transition duration-300 hover:bg-transparent hover:border-2 hover:border-primary hover:text-primary">
             Scopri di più <BiSolidSearchAlt2 className="ml-3" />
           </button>
         </div>

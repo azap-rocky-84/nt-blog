@@ -52,7 +52,7 @@ const NavItem = ({ item }) => {
               dropdown ? "block" : "hidden"
             } w-max pt-4 transition-all duration-500 lg:absolute lg:bottom-0 lg:right-0 lg:hidden lg:translate-y-full lg:transform lg:group-hover:block`}
           >
-            <ul className="flex flex-col overflow-hidden rounded-lg bg-dark-soft text-center shadow-lg lg:bg-transparent">
+            <ul className="flex flex-col overflow-hidden rounded-lg bg-dark-soft text-center shadow-lg lg:bg-white">
               {item.items.map((page, index) => (
                 <Link
                   key={index}
@@ -103,7 +103,7 @@ const Header = () => {
         <div
           className={`${
             navIsVisible ? "right-0" : "-right-full"
-          } fixed bottom-0 top-0 z-[49] mt-[56px] flex w-full flex-col items-center justify-center gap-x-9 bg-dark-hard transition-all duration-300 lg:static lg:mt-0 lg:w-auto lg:flex-row  lg:justify-end lg:bg-transparent`}
+          } fixed bottom-0 top-0 z-[49] mt-[56px] flex w-full flex-col items-center justify-center gap-x-9 bg-dark-hard transition-all duration-300 lg:static lg:mt-0 lg:w-auto lg:flex-row  lg:justify-end lg:bg-white`}
         >
           <ul className="flex flex-col items-center gap-x-2 gap-y-5 font-semibold text-white lg:flex-row lg:text-dark-soft">
             {NavItemsInfo.map((item) => (
@@ -126,7 +126,7 @@ const Header = () => {
                       profileDropdown ? "block" : "hidden"
                     } w-max pt-4 transition-all duration-500 lg:absolute lg:bottom-0 lg:right-0 lg:hidden lg:translate-y-full lg:transform lg:group-hover:block`}
                   >
-                    <ul className="flex flex-col overflow-hidden rounded-lg bg-dark-soft text-center shadow-lg lg:bg-transparent">
+                    <ul className="flex flex-col overflow-hidden rounded-lg bg-dark-soft text-center shadow-lg lg:bg-white">
                       {userState?.userInfo?.admin && (
                         <button
                           onClick={() => navigate("/admin")}
