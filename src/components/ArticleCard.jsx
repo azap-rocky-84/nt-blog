@@ -8,7 +8,7 @@ const ArticleCard = ({post, className}) => {
   return (
     <div className={`rounded-xl overflow-hidden shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] ${className}`}>
     <Link to={`/blog/${post.slug}`}>
-      <img src={post.photo ? stables.UPLOAD_FOLDER_BASE_URL + post.photo : images.noImagePost} alt="" className='w-full object-cover object-center h-auto md:h-52 lg:h-48 xl:h-60' />
+      <img src={post.photo ? stables.UPLOAD_FOLDER_BASE_URL + post.photo : images.noImagePost} alt="" className='w-full object-cover object-center h-auto md:h-52 lg:h-48 xl:h-60 transition-transform transform hover:scale-105 duration-700 ease-in-out' />
       </Link>
       <div className='p-5'>
       <Link to={`/blog/${post.slug}`}>

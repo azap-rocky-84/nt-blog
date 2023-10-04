@@ -4,7 +4,14 @@ import { MapContainer, GeoJSON } from "react-leaflet";
 import mapData from "../../data/countries/countries.json";
 import "leaflet/dist/leaflet.css";
 import "../../pages/database/TeamsDatabase.css";
+import { useQuery } from "@tanstack/react-query";
+import { getAllNt } from "../../services/index/nt";
+import { images, stables } from "../../constants";
 const TeamsDatabase = () => {
+  const { data } = useQuery({
+    queryFn: () => getAllNt(),
+    queryKey: ["nt"],
+  });
   const excludedCountries = [
     "ATA",
     "-99",
@@ -12,7 +19,6 @@ const TeamsDatabase = () => {
     "HMD",
     "IOT",
     "PCN",
-    "ESH",
     "UMI",
     "WLF",
     "GBR",
@@ -27,7 +33,9 @@ const TeamsDatabase = () => {
   };
   const onEachCountry = (feature, layer) => {
     const countryName = feature.properties.ADMIN;
-    const countryCode = feature.properties.ISO_A3;
+    const fifaCode = feature.properties.ISO_A3;
+    const countryFlag = data?.flag;
+    console.log(countryFlag);
     layer.on({
       mouseover: (event) => {
         layer.openPopup();
@@ -36,10 +44,15 @@ const TeamsDatabase = () => {
         layer.closePopup();
       },
       click: (event) => {
-        window.location.href = `/detail/${countryCode}`;
+        window.location.href = `/detail/${fifaCode}`;
       },
     });
-    layer.bindPopup(countryName);
+    const popupContent = `
+    <div style="text-align: center;">
+      <h3 style="font-weight: bold; font-family: 'Roboto', sans-serif; color: #0078d4;">${countryName}</h3>
+      <img src=${countryFlag ? stables.UPLOAD_FOLDER_BASE_URL + data?.flag : images.noImagePost}/>
+    </div>`;
+    layer.bindPopup(popupContent);
   };
   return (
     <MainLayout>
