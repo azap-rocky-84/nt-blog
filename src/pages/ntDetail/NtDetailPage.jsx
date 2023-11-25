@@ -1,10 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAllNt, getSingleNt } from "../../services/index/nt";
-import parseJsonToHtml from "../../utils/parseJsonToHtml";
+import {getSingleNt } from "../../services/index/nt";
 import MainLayout from "../../components/MainLayout";
 import NtDetailSkeleton from "./components/NtDetailSkeleton";
 import ErrorMessage from "../../components/ErrorMessage";
@@ -13,20 +10,10 @@ import { images, stables } from "../../constants";
 
 const NtDetailPage = () => {
   const { fifaCode } = useParams();
-  const userState = useSelector((state) => state.user);
-  const [breadCrumbsData, setBreadCrumbsData] = useState([]);
-  const [body, setBody] = useState(null);
+  /*const [body, setBody] = useState(null);*/
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getSingleNt({ fifaCode }),
     queryKey: ["blog", fifaCode],
-    onSuccess: (data) => {
-      setBreadCrumbsData([
-        { name: "Home", link: "/" },
-        { name: "Database", link: "/detail" },
-        { name: "Dettagli", link: `/detail/${data.fifaCode}` },
-      ]);
-      setBody(parseJsonToHtml(data?.body));
-    },
   });
   return (
     <MainLayout>
