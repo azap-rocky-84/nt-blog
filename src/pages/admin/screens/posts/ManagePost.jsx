@@ -163,7 +163,17 @@ const ManagePost = () => {
                         <td className="items-center border-b border-gray-200 bg-white px-5 py-5 text-sm">
                           <p className="whitespace-no-wrap items-center text-gray-900">
                             {post.categories.length > 0 ? (
-                              post.categories[0]
+                              post.categories
+                                .slice(0, 3)
+                                .map(
+                                  (category, index) =>
+                                    `${category.title}${
+                                      post.categories.slice(0, 3).length ===
+                                      index + 1
+                                        ? " "
+                                        : ", "
+                                    }`
+                                )
                             ) : (
                               <MdDoNotDisturbAlt />
                             )}
@@ -185,7 +195,7 @@ const ManagePost = () => {
                           <button
                             disabled={isLoadingDeletePost}
                             type="button"
-                            className="rounded-lg border-2 bg-red-600 px-2 py-2 hover:border-red-600 transition duration-300 hover:bg-white disabled:cursor-not-allowed disabled:opacity-70"
+                            className="rounded-lg border-2 bg-red-600 px-2 py-2 transition duration-300 hover:border-red-600 hover:bg-white disabled:cursor-not-allowed disabled:opacity-70"
                             onClick={() => {
                               deletePostHandler({
                                 slug: post?.slug,
@@ -198,7 +208,7 @@ const ManagePost = () => {
                           <Link to={`/admin/posts/manage/edit/${post?.slug}`}>
                             <button
                               type="button"
-                              className="rounded-lg border-2 bg-green-600 px-2 py-2 hover:border-green-600 transition duration-300 hover:bg-white"
+                              className="rounded-lg border-2 bg-green-600 px-2 py-2 transition duration-300 hover:border-green-600 hover:bg-white"
                             >
                               <BsFillPencilFill className="text-2xl text-white hover:text-green-600" />
                             </button>

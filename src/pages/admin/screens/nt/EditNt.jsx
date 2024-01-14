@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getSingleNt, updateNt } from "../../../../services/index/nt";
 import { toast } from "react-hot-toast";
 import { stables } from "../../../../constants";
@@ -13,13 +13,35 @@ import Editor from "../../../../components/editor/Editor";
 const EditNt = () => {
   const { fifaCode } = useParams();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const userState = useSelector((state) => state.user);
   const [initialFlag, setInitialFlag] = useState(null);
   const [flag, setFlag] = useState(null);
   const [body, setBody] = useState(null);
+  const [ntFifaCode, setNtFifaCode] = useState(fifaCode);
+  const [title, setTitle] = useState("");
+  const [confederation, setConfederation] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [ct, setCt] = useState("");
+  const [mostCappedPlayer, setMostCappedPlayer] = useState("");
+  const [caps, setCaps] = useState("");
+  const [topScorer, setTopScorer] = useState("");
+  const [goals, setGoals] = useState("");
   const { data, isLoading, isError } = useQuery({
     queryFn: () => getSingleNt({ fifaCode }),
     queryKey: ["blog", fifaCode],
+    onSuccess: (data) => {
+      setInitialFlag(data?.flag);
+      setTitle(data?.title);
+      setConfederation(data?.confederation);
+      setNickname(data?.nickname);
+      setCt(data?.ct);
+      setMostCappedPlayer(data?.mostCappedPlayer);
+      setCaps(data?.caps);
+      setTopScorer(data?.topScorer);
+      setGoals(data?.goals);
+    },
+    refetchOnWindowFocus: false,
   });
   const { mutate: mutateUpdateNtDetail, isLoading: isLoadingUpdateNtDetail } =
     useMutation({
@@ -33,17 +55,15 @@ const EditNt = () => {
       onSuccess: (data) => {
         queryClient.invalidateQueries(["blog", fifaCode]);
         toast.success("Nazionale modificata correttamente");
+        navigate(`/admin/nt/managent/editnt/${data.fifaCode}`, {
+          replace: true,
+        });
       },
       onError: (error) => {
         toast.error(error.message);
         console.log(error);
       },
     });
-  useEffect(() => {
-    if (!isLoading && !isError) {
-      setInitialFlag(data?.flag);
-    }
-  }, [data, isError, isLoading]);
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFlag(file);
@@ -64,7 +84,21 @@ const EditNt = () => {
       );
       updatedData.append("flag", picture);
     }
-    updatedData.append("document", JSON.stringify({ body }));
+    updatedData.append(
+      "document",
+      JSON.stringify({
+        body,
+        fifaCode: ntFifaCode,
+        title,
+        confederation,
+        nickname,
+        ct,
+        mostCappedPlayer,
+        caps,
+        topScorer,
+        goals,
+      })
+    );
     mutateUpdateNtDetail({
       updatedData,
       fifaCode,
@@ -85,7 +119,7 @@ const EditNt = () => {
       ) : isError ? (
         <ErrorMessage message="Impossibile caricare i dettagli della nazionale" />
       ) : (
-        <section className=" bg-white container mx-auto flex max-w-5xl flex-col px-5 py-5 lg:flex-row lg:items-start lg:gap-x-5">
+        <section className=" container mx-auto flex max-w-5xl flex-col bg-white px-5 py-5 lg:flex-row lg:items-start lg:gap-x-5">
           <article className="flex-1">
             <label htmlFor="flag" className="w-full cursor-pointer">
               {flag ? (
@@ -121,22 +155,134 @@ const EditNt = () => {
                 Elimina immagine
               </button>
             </div>
-            {/*
-          <div className="mt-4 flex gap-2">
-            {data?.categories.map((category) => (
-              <Link
-                to={`/blog?category=${category.name}`}
-                className="inline-block font-roboto text-sm text-primary md:text-base"
-              >
-                {category.name}
-              </Link>
-            ))}
-          </div>
-          */}
             <div className="flex justify-center">
-            <h1 className="mt-4 mb-4 font-roboto text-xl font-bold text-dark-hard md:text-[26px]">
-              {data?.title}
-            </h1>
+              <div className="d-form-control w-full">
+                <label className="d-label" htmlFor="title">
+                  <span className="d-label-text">Titolo</span>
+                </label>
+                <input
+                  id="titolo"
+                  value={title}
+                  className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300 "
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="titolo"
+                />
+              </div>
+            </div>
+            <div className="mt-8 flex justify-center">
+              <table className="mt-4 w-full border-collapse">
+                <tbody>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 text-left font-semibold">
+                      Codice FIFA
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="fifaCode"
+                        value={ntFifaCode}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300 "
+                        onChange={(e) =>
+                          setNtFifaCode(
+                            e.target.value
+                              .replace(/[^A-Z]/g, "")
+                              .toUpperCase()
+                              .slice(0, 3)
+                          )
+                        }
+                        placeholder="codice fifa"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 text-left font-semibold">
+                      Confederazione
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="confederation"
+                        value={confederation}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300 "
+                        onChange={(e) => setConfederation(e.target.value)}
+                        placeholder="confederazione"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 text-left font-semibold">
+                      Soprannome
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="nickname"
+                        value={nickname}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300 "
+                        onChange={(e) => setNickname(e.target.value)}
+                        placeholder="soprannome"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 text-left font-semibold">
+                      Commissario Tecnico
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="ct"
+                        value={ct}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300 "
+                        onChange={(e) => setCt(e.target.value)}
+                        placeholder="commissario tecnico"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 text-left font-semibold">
+                      Primatista di Presenze
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="mostCappedPlayer"
+                        value={mostCappedPlayer}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300  "
+                        onChange={(e) => setMostCappedPlayer(e.target.value)}
+                        placeholder="primatista"
+                      />
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="caps"
+                        value={caps}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300  "
+                        onChange={(e) => setCaps(e.target.value)}
+                        placeholder="00"
+                      />
+                    </td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 text-left font-semibold">
+                      Marcatore All-Time
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="topScorer"
+                        value={topScorer}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300  "
+                        onChange={(e) => setTopScorer(e.target.value)}
+                        placeholder="marcatore at"
+                      />
+                    </td>
+                    <td className="px-4 py-2 text-left">
+                      <input
+                        id="goals"
+                        value={goals}
+                        className="d-input border-slate-300 font-roboto text-xl font-medium text-dark-hard !outline-slate-300  "
+                        onChange={(e) => setGoals(e.target.value)}
+                        placeholder="00"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div className="w-full">
               {!isLoading && !isError && (
